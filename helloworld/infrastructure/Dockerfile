@@ -1,3 +1,9 @@
+FROM gradle:4.7.0-jdk8-alpine AS build
+COPY --chown=gradle:gradle . src
+WORKDIR src
+RUN gradle build --no-daemon
+COPY . .
+
 FROM openjdk:17-alpine as builder
 ARG JAR_FILE=build/libs/helloworld-*.jar
 COPY ${JAR_FILE} app.jar
