@@ -32,5 +32,5 @@ jobs:
         gradle-version: 7.4
         
     - name: Tests
-      run: gradle test
+      run: ./helloworld gradle test
 
