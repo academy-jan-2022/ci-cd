@@ -7,6 +7,9 @@
 
 name: Java CI with Gradle
 
+env:
+  should_push: github.ref == 'refs/heads/main'
+
 on:
   push:
     branches: [ main ]
@@ -35,10 +38,8 @@ jobs:
           install: true
 
       - name: Build and push
-        env: 
-         should_push: github.ref == 'refs/heads/main'
         uses: docker/build-push-action@v2
         with:
-          push: $should_push
+          push: ${{ env.should_push }}
           tags: coduranceacademy.azurecr.io/helloworld:latest
           context: ./helloworld/
