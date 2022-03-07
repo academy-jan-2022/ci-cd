@@ -38,4 +38,5 @@ jobs:
         run: |
           cd helloworld
           docker build -t coduranceacademy.azurecr.io/helloworld:latest .
+          docker images
           docker push coduranceacademy.azurecr.io/helloworld:latest
