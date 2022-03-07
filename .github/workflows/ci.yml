@@ -37,6 +37,6 @@ jobs:
       - name: Docker Build and Push
         run: |
           cd helloworld
-          docker build -t coduranceacademy.azurecr.io/helloworld:latest .
-          docker images
+          docker build -t helloworld:latest .
+          docker tag hellowworld:latest coduranceacademy.azurecr.io/helloworld:latest
           docker push coduranceacademy.azurecr.io/helloworld:latest
