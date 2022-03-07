@@ -51,6 +51,6 @@ jobs:
           username: ${{secrets.DOCKER_USERNAME}}
           password: ${{{secrets.DOCKER_PASSWORD}}
       - name: Docker Build and Push
-      - run: |
+        run: |
           docker build -t coduranceacademy.azurecr.io/helloworld ./helloworld/
           docker push coduranceacademy.azurecr.io/helloworld
