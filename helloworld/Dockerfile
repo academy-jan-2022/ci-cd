@@ -1,24 +1,21 @@
 FROM gradle:7.4.0-jdk17 AS builder
 RUN ls
-COPY . /workdir
-WORKDIR /workdir
+COPY . /home/gradle/src
+WORKDIR /home/gradle/src
 RUN gradle build --no-daemon
-RUN ls build/libs/
-ARG JAR_FILE=build/libs/*.jar
-COPY ${JAR_FILE} app.jar
-RUN java -Djarmode=layertools -jar app.jar extract
+RUN java -Djarmode=layertools -jar /home/gradle/src/build/libs/helloworld-*-SNAPSHOT.jar extract
 
 FROM openjdk:17-jdk-alpine
 
-RUN mkdir /deployments \
-    && chown 1001 /deployments \
-    && chmod "g+rwX" /deployments \
-    && chown 1001:root /deployments
+RUN mkdir /deployments
+RUN chown 1001 /deployments
+RUN chmod "g+rwX" /deployments
+RUN chown 1001:root /deployments
 
-COPY --chown=1001 --from=builder dependencies/ /deployments/
-COPY --chown=1001 --from=builder snapshot-dependencies/ /deployments/
-COPY --chown=1001 --from=builder spring-boot-loader/ /deployments/
-COPY --chown=1001 --from=builder application/ /deployments/
+COPY --chown=1001 --from=builder /home/gradle/src/dependencies/ /deployments/
+COPY --chown=1001 --from=builder /home/gradle/src/snapshot-dependencies/ /deployments/
+COPY --chown=1001 --from=builder /home/gradle/src/spring-boot-loader/ /deployments/
+COPY --chown=1001 --from=builder /home/gradle/src/application/ /deployments/
 
 EXPOSE 8080
 USER 1001
