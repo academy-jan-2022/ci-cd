@@ -39,5 +39,6 @@ jobs:
         with:
           push: true
           tags: coduranceacademy.azurecr.io/helloworld:latest
+          context: ./helloworld/
           
           
