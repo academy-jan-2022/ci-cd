@@ -1,16 +1,12 @@
 FROM gradle:7.4.0-jdk17 AS builder
 RUN ls
-#COPY . /src
-#WORKDIR /src
+COPY . /workdir
+WORKDIR /workdir
 RUN gradle build --no-daemon
-ARG JAR_FILE=build/libs/helloworld-*.jar
+RUN ls build/libs/
+ARG JAR_FILE=build/libs/*.jar
 COPY ${JAR_FILE} app.jar
 RUN java -Djarmode=layertools -jar app.jar extract
-
-#FROM openjdk:17-alpine as builder
-#ARG JAR_FILE=build/libs/helloworld-*.jar
-#COPY ${JAR_FILE} app.jar
-#RUN java -Djarmode=layertools -jar app.jar extract
 
 FROM openjdk:17-jdk-alpine
 
