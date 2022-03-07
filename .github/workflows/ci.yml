@@ -27,5 +27,6 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Docker Build and Push
         run: |
-          docker build -t coduranceacademy.azurecr.io/helloworld ./helloworld/
+          cd helloworld
+          docker build . -t coduranceacademy.azurecr.io/helloworld 
           docker push coduranceacademy.azurecr.io/helloworld
